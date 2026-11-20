@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # The fork's own unit gate. Upstream ships no build/test CI; this runs the tests that
-# cover the fork's changes (version/exports/instruct policy). The package resolves its
-# heavy classes lazily, so the gate installs no torch/sox; the CUDA inference path is
+# cover the fork's changes, including a call-site test that fails if
+# generate_custom_voice stops warning on the 0.6B checkpoint. The CUDA inference path is
 # proved by the consumer's disposable check bed in opencharly/pod-qwen3-tts.
 name: ci
 
@@ -23,11 +23,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install this package without its heavy inference dependencies
+      - name: Install the audio libraries the tokenizer import chain needs
         run: |
+          sudo apt-get update
+          sudo apt-get install -y sox libsox-dev
           python -m pip install --upgrade pip
-          python -m pip install -e . --no-deps
-          python -m pip install pytest
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch torchaudio
+          python -m pip install "transformers==4.57.3" "accelerate==1.12.0" librosa soundfile numpy einops onnxruntime sox pytest
+      - name: Install this package without re-resolving the heavy extras
+        run: python -m pip install -e . --no-deps
       - name: Compile and test
         run: |
           python -m compileall -q qwen_tts
