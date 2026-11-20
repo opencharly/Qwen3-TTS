@@ -1,0 +1,2 @@
+# Marker file for PEP 561.
+# Modified by opencharly, 2026: the upstream package-data declared py.typed but did not ship it.

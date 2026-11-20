@@ -1,0 +1,20 @@
+OpenCharly fork of Qwen3-TTS
+============================
+
+This repository is a fork of https://github.com/QwenLM/Qwen3-TTS at commit
+022e286b98fbec7e1e916cb940cdf532cd9f488e (upstream version 0.1.1).
+
+Upstream copyright and license notices are retained verbatim in LICENSE and in the
+source headers. The following files were modified by opencharly in 2026:
+
+- pyproject.toml        fork version (0.1.1.post1) and project URLs
+- qwen_tts/__init__.py  define __version__, export the public classes, resolve them lazily
+- qwen_tts/inference/qwen3_tts_model.py
+                         use the instruction policy module below (upstream discarded silently)
+- qwen_tts/py.typed     ship the marker the upstream package-data declared
+
+Files added: qwen_tts/inference/instruct.py (the dependency-free instruction policy),
+tests/, .github/workflows/ci.yml, .github/workflows/tag-on-merge.yml, NOTICE, FORK.md,
+AGENTS.md.
+
+No Qwen or Alibaba trademark is claimed; this is an independent fork.
