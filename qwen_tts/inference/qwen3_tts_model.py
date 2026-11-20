@@ -27,6 +27,7 @@ import torch
 from transformers import AutoConfig, AutoModel, AutoProcessor
 
 from ..core.models import Qwen3TTSConfig, Qwen3TTSForConditionalGeneration, Qwen3TTSProcessor
+from .instruct import resolve_instruct
 
 AudioLike = Union[
     str,                     # wav path, URL, base64
@@ -797,7 +798,7 @@ class Qwen3TTSModel:
         languages = self._ensure_list(language) if isinstance(language, list) else ([language] * len(texts) if language is not None else ["Auto"] * len(texts))
         speakers = self._ensure_list(speaker)
         if self.model.tts_model_size in "0b6": # for 0b6 model, instruct is not supported
-            instruct = None
+            instruct = resolve_instruct(self.model.tts_model_size, instruct)
         instructs = self._ensure_list(instruct) if isinstance(instruct, list) else ([instruct] * len(texts) if instruct is not None else [""] * len(texts))
 
         if len(languages) == 1 and len(texts) > 1:

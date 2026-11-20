@@ -4,7 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qwen-tts"
-version = "0.1.1"
+# Modified by opencharly, 2026: the fork carries the fixes listed in NOTICE/FORK.md and a
+# PEP-440-distinct version so an environment can tell it from the upstream PyPI release.
+version = "0.1.1.post1"
 description = "Qwen-TTS python package"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -32,8 +34,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Qwen/Qwen3-TTS"
-Repository = "https://github.com/Qwen/Qwen3-TTS"
+Homepage = "https://github.com/opencharly/Qwen3-TTS"
+Repository = "https://github.com/opencharly/Qwen3-TTS"
+Upstream = "https://github.com/QwenLM/Qwen3-TTS"
 
 [project.scripts]
 qwen-tts-demo = "qwen_tts.cli.demo:main"
